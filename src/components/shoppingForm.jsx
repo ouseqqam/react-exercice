@@ -1,15 +1,21 @@
+import { context } from "./shoppingList"
+import { useContext } from "react"
 
 
-export function ShoppingForm({setProduct}) {
+export function ShoppingForm() {
+    const { setProduct } = useContext(context)
     const onSubmit = e => {
         const product = {
             id: Math.random() * 100,
             product: e.target.product.value,
-            price: e.target.price.value,
+            price: Number(e.target.price.value),
             packed: false
         }
         e.preventDefault()
-        setProduct(prev => [...prev, product])
+        if (product.product && product.price)
+            setProduct(prev => [...prev, product])
+        e.target.product.value = ''
+        e.target.price.value = ''
     }
     return (
         <div>

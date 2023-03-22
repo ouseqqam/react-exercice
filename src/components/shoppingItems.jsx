@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react"
+import { useContext } from "react"
+import { context } from "./shoppingList"
 
 
-function ShoppingItems({product, setProduct}) {
+function ShoppingItems() {
+    const {product, setProduct } = useContext(context)
     const [total, setTotal] = useState(0)
 
     useEffect(() => {
         setTotal(
-            product?.reduce((accum, p) => accum + Number(p.price), 0)
+            product?.reduce((accum, p) => accum + p.price, 0)
         )
     }, [product]);
 
@@ -34,7 +37,7 @@ function ShoppingItems({product, setProduct}) {
                     product?.map(p => {
                         if (!p.packed)
                             return (
-                                <div key={p.id} class='flex justify-between gap-2'>
+                                <div key={p.id} class='flex justify-between gap-2 text-2xl'>
                                     <label htmlFor={p.id}>
                                         <input  type="checkbox" id={p.id} onChange={() => onChange(p.id)} checked={p.packed} />
                                             {p.product}
@@ -54,7 +57,7 @@ function ShoppingItems({product, setProduct}) {
                     product?.map(p => {
                         if (p.packed) {
                             return (
-                                <div key={p.id} class='flex justify-between gap-2'>
+                                <div key={p.id} class='flex justify-between gap-2 text-2xl font-normal leading-normal mt-0 mb-2'>
                                     <label htmlFor={p.id}>
                                         <input type="checkbox" id={p.id} onChange={() => onChange(p.id)} checked={p.packed} />
                                             {p.product}
