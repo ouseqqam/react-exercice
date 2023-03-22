@@ -3,7 +3,11 @@ import { useContext } from "react"
 
 
 export function ShoppingForm() {
-    const { setProduct } = useContext(context)
+    const { product, dispatch } = useContext(context)
+
+    const setProduct = (item) => {
+        dispatch({type: 'add', item})
+    }
     const onSubmit = e => {
         const product = {
             id: Math.random() * 100,
@@ -13,7 +17,7 @@ export function ShoppingForm() {
         }
         e.preventDefault()
         if (product.product && product.price)
-            setProduct(prev => [...prev, product])
+            setProduct(product)
         e.target.product.value = ''
         e.target.price.value = ''
     }

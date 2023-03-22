@@ -4,8 +4,16 @@ import { context } from "./shoppingList"
 
 
 function ShoppingItems() {
-    const {product, setProduct } = useContext(context)
+    const {product, dispatch } = useContext(context)
     const [total, setTotal] = useState(0)
+
+    const setProduct = (id) => {
+        dispatch({type: 'new', id})
+    }
+
+    const deleteProduct = (id) => {
+        dispatch({type: 'delete', id})
+    }
 
     useEffect(() => {
         setTotal(
@@ -14,17 +22,11 @@ function ShoppingItems() {
     }, [product]);
 
     const onChange = (id) => {
-        const newP = product?.map(p => {
-            if (p.id === id)
-                return {...p, packed: !p.packed}
-            return p
-        })
-        setProduct(newP)
+        setProduct(id)
     }
 
     const onDelete = (id) => {
-        const newP = product.filter(p => p.id !== id)
-        setProduct(newP)
+        deleteProduct(id)
     }
 
     return (
